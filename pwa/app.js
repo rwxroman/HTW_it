@@ -6,7 +6,7 @@ const months = [
   "July", "August", "September", "October", "November", "December"
 ];
 
-const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 function doTitle() {
   let title = document.getElementsByTagName("title");
@@ -27,7 +27,10 @@ function populateYearSelector() {
 }
 
 function generateMonth(month, year) {
-  const firstDay = new Date(year, month, 1).getDay();
+  // Berechne den Wochentag des ersten Tages (0 = Sonntag, 1 = Montag, ...)
+  let firstDay = new Date(year, month, 1).getDay();
+  // Passe an, damit Montag = 0, Sonntag = 6
+  firstDay = (firstDay + 6) % 7;
   const daysInMonth = new Date(year, month + 1, 0).getDate();
 
   const monthDiv = document.createElement("div");
@@ -49,7 +52,7 @@ function generateMonth(month, year) {
   const daysDiv = document.createElement("div");
   daysDiv.classList.add("days");
 
-  // Empty cells before first day
+  // Leere Zellen vor dem ersten Tag
   for (let i = 0; i < firstDay; i++) {
     daysDiv.appendChild(document.createElement("div"));
   }
