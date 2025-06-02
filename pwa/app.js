@@ -1,4 +1,5 @@
 const yearSelect = document.getElementById("year");
+const monthSelect = document.getElementById("month");
 const calendarContainer = document.getElementById("yearly-calendar");
 
 const months = [
@@ -24,6 +25,18 @@ function populateYearSelector() {
 
   const now = new Date();
   yearSelect.value = now.getFullYear();
+}
+
+function populateMonthSelector() {
+  for (let y = 1; y <= 12; y++) {
+    const option = document.createElement("option");
+    option.value = y;
+    option.textContent = y;
+    monthSelect.appendChild(option);
+  }
+
+  const now = new Date();
+  monthSelect.value = now.getMonth();
 }
 
 function generateMonth(month, year) {
@@ -81,4 +94,5 @@ yearSelect.addEventListener("change", () => {
 });
 
 populateYearSelector();
+populateMonthSelector();
 renderYearlyCalendar(parseInt(yearSelect.value));
