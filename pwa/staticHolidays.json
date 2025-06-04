@@ -1,0 +1,8 @@
+{
+  "Neujahr": { "day": 1, "month": 1 },
+  "Tag der Arbeit": { "day": 1, "month": 5 }, 
+  "Tag der deutschen Einheit": { "day": 3, "month": 10 }, 
+  "Reformationstag": { "day": 31, "month": 10 }, 
+  "Erster Weihnachtsfeiertag": { "day": 25, "month": 12 }, 
+  "Zweiter Weihnachtsfeiertag": { "day": 26, "month": 12 }
+}

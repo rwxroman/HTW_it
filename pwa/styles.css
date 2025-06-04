@@ -58,3 +58,13 @@ select {
 .days div {
   padding: 5px 0;
 }
+
+.holiday {
+  background-color: rgb(250, 255, 96);
+  border-radius: 10rem;
+}
+
+.today {
+  background-color: rgb(255, 107, 107);
+  border-radius: 10rem;
+}
