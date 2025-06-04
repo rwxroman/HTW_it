@@ -68,3 +68,17 @@ select {
   background-color: rgb(255, 107, 107);
   border-radius: 10rem;
 }
+
+@media (max-width: 1270px) {
+  .year-grid {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 1020px;
+  }
+}
+
+@media (max-width: 1020px) {
+  .year-grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 680px;
+  }
+}
