@@ -3,18 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Calendar PWA</title>
-  <link rel="manifest" href="manifest.json" />
+  <title></title>
+  <!-- <link rel="manifest" href="manifest.json" /> -->
   <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" href="icons/icon-192.png" />
   <meta name="theme-color" content="#2d89ef" />
 </head>
 <body>
-  <h1>Yearly Calendar</h1>
+  <h1 id="heading">asd</h1>
 
   <div class="controls">
-    <label for="month">Month:</label>
+    <!-- andere idee, mit monatsauswahl, verworfen
+      <label for="month">Month:</label>
     <select id="month"></select>
+     -->
     <label for="year">Year:</label>
     <select id="year"></select>
   </div>
@@ -22,11 +23,13 @@
   <div id="yearly-calendar" class="year-grid"></div>
 
   <script src="app.js"></script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
+  <!--
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
         .then(() => console.log('Service Worker Registered'));
-    }
-  </script>
+      }
+    </script>
+  -->
 </body>
 </html>
