@@ -152,3 +152,9 @@ getStaticHolidays();
 renderYearlyCalendar(parseInt(yearSelect.value));
 colorHolidays();
 colorToday();
+
+//    ^^
+//  <° )
+//   \  ^^^^  /\
+//    \        /
+//       |   |
