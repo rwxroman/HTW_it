@@ -146,6 +146,7 @@ function renderYearlyCalendar(year) {
   }
   colorHolidays();
   colorToday();
+  colorMovableHolidays(year);
 }
 
 function colorHolidays() {
@@ -156,6 +157,32 @@ function colorHolidays() {
   document.querySelector(".October.\\33\\31").classList.add("holiday");
   document.querySelector(".December.\\32\\35").classList.add("holiday");
   document.querySelector(".December.\\32\\36").classList.add("holiday");
+}
+
+function escapeDaySelector(day) {
+  // CSS-Escape für Zahlen am Anfang: \3X für einstellige, \32 0 für 20 usw.
+  if (day < 10) {
+    return `\\3${day} `;
+  } else {
+    return `\\3${day.toString()[0]} ${day.toString()[1]}`;
+  }
+}
+
+function colorMovableHolidays(year) {
+  const feiertage = berechnenBeweglicheFeiertage(year);
+
+  Object.entries(feiertage).forEach(([name, date]) => {
+    const monthName = months[date.getMonth()];
+    const day = date.getDate();
+    const daySelector = escapeDaySelector(day);
+    const selector = `.${monthName}.${daySelector}`;
+    const cell = document.querySelector(selector);
+    if (cell) {
+      cell.classList.add("holidayMove");
+      cell.title = name.charAt(0).toUpperCase() + name.slice(1).replace(/_/g, " ");
+    }
+    console.log(`${name}: ${day}. ${monthName} ${year} | Selector: ${selector}`);
+  });
 }
 
 function colorToday() {
@@ -188,8 +215,59 @@ yearSelect.addEventListener("change", () => {
   const selectedYear = parseInt(yearSelect.value);
   renderYearlyCalendar(selectedYear);
   colorHolidays();
+  colorMovableHolidays(selectedYear);
 });
 
+function berechnenOsterSonntag(year) {
+  const a = year % 19;
+  const b = Math.floor(year / 100);
+  const c = year % 100;
+  const d = Math.floor(b / 4);
+  const e = b % 4;
+  const f = Math.floor((b + 8) / 25);
+  const g = Math.floor((b - f + 1) / 3);
+  const h = (19 * a + b - d - g + 15) % 30;
+  const i = Math.floor(c / 4);
+  const k = c % 4;
+  const l = (32 + 2 * e + 2 * i - h - k) % 7;
+  const m = Math.floor((a + 11 * h + 22 * l) / 451);
+  const month = Math.floor((h + l - 7 * m + 114) / 31); // 3 = März, 4 = April
+  const day = ((h + l - 7 * m + 114) % 31) + 1;
+  return new Date(year, month - 1, day); // JS: Monat 0-basiert!
+}
+
+function berechnenBeweglicheFeiertage(year) {
+
+  
+  const ostersonntag = berechnenOsterSonntag(year);
+
+  const aschermittwoch = new Date(ostersonntag);
+    aschermittwoch.setDate(aschermittwoch.getDate() - 46); // Aschermittwoch ist 46 Tage vor Ostersonntag
+  const karfreiteg = new Date(ostersonntag);
+    karfreiteg.setDate(karfreiteg.getDate() - 2); // Karfreitag ist 2 Tage vor Ostersonntag
+  const ostermontag = new Date(ostersonntag);
+    ostermontag.setDate(ostermontag.getDate() + 1); // Ostermontag ist am Tag nach Ostersonntag
+  const christi_himmelfahrt = new Date(ostersonntag);
+    christi_himmelfahrt.setDate(christi_himmelfahrt.getDate() + 39); // Christi Himmelfahrt ist 39 Tage nach Ostersonntag
+  const pfingstsonntag = new Date(ostersonntag);
+    pfingstsonntag.setDate(pfingstsonntag.getDate() + 49); // 49 Tage nach Ostersonntag
+  const pfingstmontag = new Date(ostersonntag);
+    pfingstmontag.setDate(pfingstmontag.getDate() + 50); // Pfingstmontag ist 50 Tage nach Ostersonntag
+  const fronleichnam = new Date(ostersonntag);
+    fronleichnam.setDate(fronleichnam.getDate() + 60); // Fronleichnam ist 60 Tage nach Ostersonntag
+
+  return {
+    ostersonntag: ostersonntag,
+    aschermittwoch: aschermittwoch,
+    karfreitag: karfreiteg,
+    ostermontag: ostermontag,
+    christi_himmelfahrt: christi_himmelfahrt,
+    pfingstsonntag: pfingstsonntag,
+    pfingstmontag: pfingstmontag,
+    fronleichnam: fronleichnam
+  };
+
+}
 
 populateYearSelector();
 // populateMonthSelector();

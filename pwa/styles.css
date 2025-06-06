@@ -74,6 +74,11 @@ select {
   border-radius: 10rem;
 }
 
+.holidayMove {
+  background-color: green;
+  border-radius: 10rem;
+}
+
 .today {
   background-color: rgb(255, 107, 107);
   border-radius: 10rem;
