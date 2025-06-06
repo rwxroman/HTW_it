@@ -1,3 +1,10 @@
+/*
+C:  titl zeigt den aktuellen tag an aber wird nicht mehr aktuallisiert ,:D
+    
+
+
+*/
+
 const yearSelect = document.getElementById("year");
 const monthSelect = document.getElementById("month");
 const calendarContainer = document.getElementById("yearly-calendar");
