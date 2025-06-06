@@ -34,11 +34,28 @@ function populateYearSelector() {
 //   monthSelect.value = now.getMonth();
 // }
 
+function getWeekNumber(date) {
+  // ISO 8601: Woche beginnt am Montag, KW 1 enthält den ersten Donnerstag des Jahres
+  const temp = new Date(date.getTime());
+  temp.setHours(0, 0, 0, 0);
+  // Donnerstag dieser Woche finden
+  temp.setDate(temp.getDate() + 3 - ((temp.getDay() + 6) % 7));
+  // 1. Januar der KW-Jahres
+  const week1 = new Date(temp.getFullYear(), 0, 4);
+  // KW berechnen
+  return (
+    1 +
+    Math.round(
+      ((temp.getTime() - week1.getTime()) / 86400000 - 3 + ((week1.getDay() + 6) % 7)) / 7
+    )
+  );
+}
+
 // generate a div for each month, using the right start of the week (month does not always start on monday)
 function generateMonth(month, year) {
   // Berechne den Wochentag des ersten Tages (0 = Sonntag, 1 = Montag, ...)
-  let firstDay = new Date(year, month, 1).getDay();
   // Passe an, damit Montag = 0, Sonntag = 6
+  let firstDay = new Date(year, month, 1).getDay();
   firstDay = (firstDay + 6) % 7;
   const daysInMonth = new Date(year, month + 1, 0).getDate();
 
@@ -51,6 +68,11 @@ function generateMonth(month, year) {
 
   const weekdaysDiv = document.createElement("div");
   weekdaysDiv.classList.add("weekdays");
+  // KW-Header
+  const kwHeader = document.createElement("div");
+  kwHeader.textContent = "KW";
+  kwHeader.classList.add("kw");
+  weekdaysDiv.appendChild(kwHeader);
   weekdays.forEach(day => {
     const dayElement = document.createElement("div");
     dayElement.textContent = day;
@@ -61,18 +83,35 @@ function generateMonth(month, year) {
   const daysDiv = document.createElement("div");
   daysDiv.classList.add("days");
 
-  // empty cells before first day of the month
-  for (let i = 0; i < firstDay; i++) {
-    daysDiv.appendChild(document.createElement("div"));
-  }
+  let day = 1;
+  let started = false;
+  // Anzahl der Wochenzeilen berechnen
+  const totalRows = Math.ceil((firstDay + daysInMonth) / 7);
 
+  for (let row = 0; row < totalRows; row++) {
+    // KW für die erste Zelle der Woche berechnen
+    let firstDateOfWeek = new Date(year, month, 1 + row * 7 - firstDay);
+    const kw = getWeekNumber(firstDateOfWeek);
 
+    // KW-Zelle
+    const kwDiv = document.createElement("div");
+    kwDiv.textContent = kw;
+    kwDiv.classList.add("kw");
+    daysDiv.appendChild(kwDiv);
 
-  for (let d = 1; d <= daysInMonth; d++) {
-    const dayElement = document.createElement("div");
-    dayElement.textContent = d;
-    daysDiv.appendChild(dayElement);
-    dayElement.classList.add(months[month], d);
+    for (let col = 0; col < 7; col++) {
+      const cell = document.createElement("div");
+      const cellIndex = row * 7 + col;
+      if (cellIndex < firstDay || day > daysInMonth) {
+        // Leere Zellen vor dem 1. und nach letztem Tag
+        daysDiv.appendChild(cell);
+      } else {
+        cell.textContent = day;
+        cell.classList.add(months[month], day);
+        daysDiv.appendChild(cell);
+        day++;
+      }
+    }
   }
 
   monthDiv.appendChild(daysDiv);
