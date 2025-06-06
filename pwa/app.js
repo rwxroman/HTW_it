@@ -144,11 +144,9 @@ function renderYearlyCalendar(year) {
 
     calendarContainer.appendChild(month);
   }
-  document.title = "Calendar PWA : " +  year;
   colorHolidays();
   colorToday();
 }
-
 
 function colorHolidays() {
   // TODO: get dates from json and parse it
@@ -178,6 +176,14 @@ function colorToday() {
 
 }
 
+function setTitle() {
+  let now = new Date();
+  let month = months[now.getMonth()];
+  let day = now.getDate(); 
+  let year = now.getFullYear();
+  document.title = "Calendar PWA : " + day + "." + month + "." + year;
+}
+
 yearSelect.addEventListener("change", () => {
   const selectedYear = parseInt(yearSelect.value);
   renderYearlyCalendar(selectedYear);
@@ -191,6 +197,7 @@ getStaticHolidays();
 renderYearlyCalendar(parseInt(yearSelect.value));
 colorHolidays();
 colorToday();
+setTitle();
 
 //    ^^
 //  <° )
