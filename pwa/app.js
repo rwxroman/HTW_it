@@ -259,14 +259,14 @@ function berechnenBeweglicheFeiertage(year) {
     pfingstmontag.setDate(pfingstmontag.getDate() + 50); // Pfingstmontag ist 50 Tage nach Ostersonntag
 
   return {
-    //ostersonntag: ostersonntag,
-    //aschermittwoch: aschermittwoch,
+    // ostersonntag: ostersonntag,
+    // aschermittwoch: aschermittwoch,
     karfreitag: karfreiteg,
     ostermontag: ostermontag,
     christi_himmelfahrt: christi_himmelfahrt,
-    //pfingstsonntag: pfingstsonntag,
+    // pfingstsonntag: pfingstsonntag,
     pfingstmontag: pfingstmontag,
-    //haha kek
+    // haha kek
     //  <° )
   };
 
