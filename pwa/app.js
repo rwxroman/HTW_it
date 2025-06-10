@@ -261,14 +261,14 @@ function berechnenBeweglicheFeiertage(year) {
     fronleichnam.setDate(fronleichnam.getDate() + 60); // Fronleichnam ist 60 Tage nach Ostersonntag
 
   return {
-    ostersonntag: ostersonntag,
-    aschermittwoch: aschermittwoch,
+    // ostersonntag: ostersonntag,
+    // aschermittwoch: aschermittwoch,
     karfreitag: karfreiteg,
     ostermontag: ostermontag,
     christi_himmelfahrt: christi_himmelfahrt,
-    pfingstsonntag: pfingstsonntag,
+    // pfingstsonntag: pfingstsonntag,
     pfingstmontag: pfingstmontag,
-    fronleichnam: fronleichnam
+    // fronleichnam: fronleichnam
   };
 
 }
