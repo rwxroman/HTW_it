@@ -2,7 +2,7 @@
 C:  titl zeigt den aktuellen tag an aber wird nicht mehr aktuallisiert ,:D
     
 TODO:   title repparieren
-        color today repparieren
+              --color today repparieren
         topbarfunktion
         feiertage aus json laden
 
@@ -257,18 +257,17 @@ function berechnenBeweglicheFeiertage(year) {
     pfingstsonntag.setDate(pfingstsonntag.getDate() + 49); // 49 Tage nach Ostersonntag
   const pfingstmontag = new Date(ostersonntag);
     pfingstmontag.setDate(pfingstmontag.getDate() + 50); // Pfingstmontag ist 50 Tage nach Ostersonntag
-  const fronleichnam = new Date(ostersonntag);
-    fronleichnam.setDate(fronleichnam.getDate() + 60); // Fronleichnam ist 60 Tage nach Ostersonntag
 
   return {
-    ostersonntag: ostersonntag,
-    aschermittwoch: aschermittwoch,
+    //ostersonntag: ostersonntag,
+    //aschermittwoch: aschermittwoch,
     karfreitag: karfreiteg,
     ostermontag: ostermontag,
     christi_himmelfahrt: christi_himmelfahrt,
-    pfingstsonntag: pfingstsonntag,
+    //pfingstsonntag: pfingstsonntag,
     pfingstmontag: pfingstmontag,
-    fronleichnam: fronleichnam
+    //haha kek
+    //  <° )
   };
 
 }
