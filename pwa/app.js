@@ -9,7 +9,6 @@ const months = [
 
 const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
-// generate elements in the year-dropdown
 function populateYearSelector() {
   for (let y = 2000; y <= 2099; y++) {
     const option = document.createElement("option");
@@ -17,7 +16,6 @@ function populateYearSelector() {
     option.textContent = y;
     yearSelect.appendChild(option);
   }
-// default select year now
   const now = new Date();
   yearSelect.value = now.getFullYear();
 }
@@ -35,14 +33,14 @@ function populateYearSelector() {
 // }
 
 function getWeekNumber(date) {
-  // ISO 8601: Woche beginnt am Montag, KW 1 enthält den ersten Donnerstag des Jahres
+ 
   const temp = new Date(date.getTime());
   temp.setHours(0, 0, 0, 0);
-  // Donnerstag dieser Woche finden
+
   temp.setDate(temp.getDate() + 3 - ((temp.getDay() + 6) % 7));
-  // 1. Januar der KW-Jahres
+
   const week1 = new Date(temp.getFullYear(), 0, 4);
-  // KW berechnen
+
   return (
     1 +
     Math.round(
@@ -51,10 +49,7 @@ function getWeekNumber(date) {
   );
 }
 
-// generate a div for each month, using the right start of the week (month does not always start on monday)
 function generateMonth(month, year) {
-  // Berechne den Wochentag des ersten Tages (0 = Sonntag, 1 = Montag, ...)
-  // Passe an, damit Montag = 0, Sonntag = 6
   let firstDay = new Date(year, month, 1).getDay();
   firstDay = (firstDay + 6) % 7;
   const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -138,7 +133,6 @@ fetch('staticHolidays.json')
   });
 }
 
-// generate the final yearly calendar
 function renderYearlyCalendar(year) {
   calendarContainer.innerHTML = "";
   for (let m = 0; m < 12; m++) {
@@ -171,7 +165,6 @@ function colorHolidays() {
 }
 
 function escapeDaySelector(day) {
-  // CSS-Escape für Zahlen am Anfang: \3X für einstellige, \32 0 für 20 usw.
   if (day < 10) {
     return `\\3${day} `;
   } else {
@@ -200,7 +193,7 @@ function colorToday() {
   let now = new Date();
   let shownYear = parseInt(yearSelect.value);
   let currentYear = now.getFullYear();
-  if (shownYear !== currentYear) return; // Nur im aktuellen Jahr markieren
+  if (shownYear !== currentYear) return;
 
   let month = months[now.getMonth()];
   let day = now.getDate();
@@ -244,9 +237,9 @@ function berechnenOsterSonntag(year) {
   const k = c % 4;
   const l = (32 + 2 * e + 2 * i - h - k) % 7;
   const m = Math.floor((a + 11 * h + 22 * l) / 451);
-  const month = Math.floor((h + l - 7 * m + 114) / 31); // 3 = März, 4 = April
+  const month = Math.floor((h + l - 7 * m + 114) / 31); 
   const day = ((h + l - 7 * m + 114) % 31) + 1;
-  return new Date(year, month - 1, day); // JS: Monat 0-basiert!
+  return new Date(year, month - 1, day);
 }
 
 function berechnenBeweglicheFeiertage(year) {
@@ -255,17 +248,17 @@ function berechnenBeweglicheFeiertage(year) {
   const ostersonntag = berechnenOsterSonntag(year);
 
   const aschermittwoch = new Date(ostersonntag);
-    aschermittwoch.setDate(aschermittwoch.getDate() - 46); // Aschermittwoch ist 46 Tage vor Ostersonntag
+    aschermittwoch.setDate(aschermittwoch.getDate() - 46);
   const karfreiteg = new Date(ostersonntag);
-    karfreiteg.setDate(karfreiteg.getDate() - 2); // Karfreitag ist 2 Tage vor Ostersonntag
+    karfreiteg.setDate(karfreiteg.getDate() - 2);
   const ostermontag = new Date(ostersonntag);
-    ostermontag.setDate(ostermontag.getDate() + 1); // Ostermontag ist am Tag nach Ostersonntag
+    ostermontag.setDate(ostermontag.getDate() + 1);
   const christi_himmelfahrt = new Date(ostersonntag);
-    christi_himmelfahrt.setDate(christi_himmelfahrt.getDate() + 39); // Christi Himmelfahrt ist 39 Tage nach Ostersonntag
+    christi_himmelfahrt.setDate(christi_himmelfahrt.getDate() + 39);
   const pfingstsonntag = new Date(ostersonntag);
-    pfingstsonntag.setDate(pfingstsonntag.getDate() + 49); // 49 Tage nach Ostersonntag
+    pfingstsonntag.setDate(pfingstsonntag.getDate() + 49);
   const pfingstmontag = new Date(ostersonntag);
-    pfingstmontag.setDate(pfingstmontag.getDate() + 50); // Pfingstmontag ist 50 Tage nach Ostersonntag
+    pfingstmontag.setDate(pfingstmontag.getDate() + 50);
 
   return {
     // ostersonntag: ostersonntag,
