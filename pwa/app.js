@@ -197,20 +197,14 @@ function colorMovableHolidays(year) {
 
 function colorToday() {
   let now = new Date();
-  let month = months[now.getMonth()]; // to get the month-word instead of month-number
-  let day = now.getDay()+1; // 0-indexed
-  // console.log(month, day);
-  // document.querySelector(".June.\\34").classList.add("today");
-  
-  // only workd for one-digit dates
-  document.querySelector("." + month + ".\\3" + day).classList.add("today");
-  
-  // TODO: fix for two-digit day-dates
-  // if (day > 9) {
-  //   day[0] = "\33" + day[0];
-  //   day[1] = "\33" + day[1];
-  // }
-
+  let month = months[now.getMonth()];
+  let day = now.getDate(); // <-- das ist der Tag im Monat (1-31)
+  let daySelector = escapeDaySelector(day);
+  let selector = `.${month}.${daySelector}`;
+  let cell = document.querySelector(selector);
+  if (cell) {
+    cell.classList.add("today");
+  }
 }
 
 function setTitle() {
