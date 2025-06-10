@@ -191,7 +191,7 @@ function colorMovableHolidays(year) {
       cell.classList.add("holidayMove");
       cell.title = name.charAt(0).toUpperCase() + name.slice(1).replace(/_/g, " ");
     }
-    console.log(`${name}: ${day}. ${monthName} ${year} | Selector: ${selector}`);
+    // console.log(`${name}: ${day}. ${monthName} ${year} | Selector: ${selector}`);
   });
 }
 
@@ -208,11 +208,7 @@ function colorToday() {
 }
 
 function setTitle() {
-  let now = new Date();
-  let month = months[now.getMonth()];
-  let day = now.getDate(); 
-  let year = now.getFullYear();
-  document.title = "Calendar PWA : " + day + "." + month + "." + year;
+  document.getElementById("title").innerHTML = yearSelect.value;
 }
 
 yearSelect.addEventListener("change", () => {
@@ -220,6 +216,8 @@ yearSelect.addEventListener("change", () => {
   renderYearlyCalendar(selectedYear);
   colorHolidays();
   colorMovableHolidays(selectedYear);
+  setTitle();
+  console.log(selectedYear);
 });
 
 function berechnenOsterSonntag(year) {
