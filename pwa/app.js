@@ -1,4 +1,3 @@
-
 const yearSelect = document.getElementById("year");
 const monthSelect = document.getElementById("month");
 const calendarContainer = document.getElementById("yearly-calendar");
@@ -119,6 +118,15 @@ function generateMonth(month, year) {
   return monthDiv;
 }
 
+const staticHolidays = {
+  "Neujahr": { day: 1, month: 1 },
+  "Tag der Arbeit": { day: 1, month: 5 },
+  "Tag der deutschen Einheit": { day: 3, month: 10 },
+  "Reformationstag": { day: 31, month: 10 },
+  "Erster Weihnachtsfeiertag": { day: 25, month: 12 },
+  "Zweiter Weihnachtsfeiertag": { day: 26, month: 12 }
+};
+
 function getStaticHolidays() {
 fetch('staticHolidays.json')
   .then(response => response.json())
@@ -151,13 +159,15 @@ function renderYearlyCalendar(year) {
 }
 
 function colorHolidays() {
-  // TODO: get dates from json and parse it
-  document.querySelector(".January.\\31").classList.add("holiday");
-  document.querySelector(".May.\\31").classList.add("holiday");
-  document.querySelector(".October.\\33").classList.add("holiday");
-  document.querySelector(".October.\\33\\31").classList.add("holiday");
-  document.querySelector(".December.\\32\\35").classList.add("holiday");
-  document.querySelector(".December.\\32\\36").classList.add("holiday");
+  Object.values(staticHolidays).forEach(holiday => {
+    const monthName = months[holiday.month - 1];
+    const daySelector = escapeDaySelector(holiday.day);
+    const selector = `.${monthName}.${daySelector}`;
+    const cell = document.querySelector(selector);
+    if (cell) {
+      cell.classList.add("holiday");
+    }
+  });
 }
 
 function escapeDaySelector(day) {
@@ -220,6 +230,7 @@ yearSelect.addEventListener("change", () => {
   console.log(selectedYear);
 });
 
+
 function berechnenOsterSonntag(year) {
   const a = year % 19;
   const b = Math.floor(year / 100);
@@ -264,8 +275,6 @@ function berechnenBeweglicheFeiertage(year) {
     christi_himmelfahrt: christi_himmelfahrt,
     // pfingstsonntag: pfingstsonntag,
     pfingstmontag: pfingstmontag,
-    // haha kek
-    //  <° )
   };
 
 }
