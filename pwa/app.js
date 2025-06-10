@@ -5,7 +5,7 @@ TODO:   title repparieren
               --color today repparieren
         topbarfunktion
         feiertage aus json laden
-        colortoday  nur aud das aktuelle jahr anwenden
+              --colortoday  nur aud das aktuelle jahr anwenden
 
 */
 
