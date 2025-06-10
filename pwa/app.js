@@ -1,7 +1,10 @@
 /*
 C:  titl zeigt den aktuellen tag an aber wird nicht mehr aktuallisiert ,:D
     
-
+TODO:   title repparieren
+        color today repparieren
+        topbarfunktion
+        feiertage aus json laden
 
 */
 
