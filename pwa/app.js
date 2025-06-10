@@ -5,6 +5,7 @@ TODO:   title repparieren
               --color today repparieren
         topbarfunktion
         feiertage aus json laden
+        colortoday  nur aud das aktuelle jahr anwenden
 
 */
 
@@ -197,8 +198,12 @@ function colorMovableHolidays(year) {
 
 function colorToday() {
   let now = new Date();
+  let shownYear = parseInt(yearSelect.value);
+  let currentYear = now.getFullYear();
+  if (shownYear !== currentYear) return; // Nur im aktuellen Jahr markieren
+
   let month = months[now.getMonth()];
-  let day = now.getDate(); // <-- das ist der Tag im Monat (1-31)
+  let day = now.getDate();
   let daySelector = escapeDaySelector(day);
   let selector = `.${month}.${daySelector}`;
   let cell = document.querySelector(selector);
