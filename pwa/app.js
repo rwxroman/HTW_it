@@ -216,12 +216,17 @@ function setTitle() {
   document.getElementById("title").innerHTML = yearSelect.value;
 }
 
+function setHeading() {
+  let heading = document.getElementById("heading").innerHTML = "Best calendar for the year " + yearSelect.value;
+}
+
 yearSelect.addEventListener("change", () => {
   const selectedYear = parseInt(yearSelect.value);
   renderYearlyCalendar(selectedYear);
   colorHolidays();
   colorMovableHolidays(selectedYear);
   setTitle();
+  setHeading();
   console.log(selectedYear);
 });
 
